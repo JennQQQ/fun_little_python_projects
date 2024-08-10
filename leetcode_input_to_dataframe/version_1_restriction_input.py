@@ -1,6 +1,6 @@
 #########
-1. COPY the testcase table then paste it AS ONE LINE
-2. Each cell content can not be separated by any space
+#1. COPY the testcase table then paste it AS ONE LINE
+#2. Each cell content can not be separated by any space
 #########
 
 import numpy as np
