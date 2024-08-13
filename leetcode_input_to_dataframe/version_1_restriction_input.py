@@ -1,8 +1,7 @@
 #########
 #1. COPY the testcase table then paste it AS ONE LINE
-#2. Each cell content can not be separated by any space
+#2. Each cell content CAN BE separated by spaces
 #########
-
 import numpy as np
 import pandas as pd
 
@@ -10,8 +9,10 @@ col = {}
 string = input('Table:')
 table={}
 
+text = string.split()
+
 count = 0
-for word in string.split():
+for word in text:
     if '-' in word:
         break
     if '|' not in word:
@@ -21,19 +22,32 @@ for word in string.split():
 count-=1
 
 line_count = 0
-ct = 0
+ct = 1
+line = 1
+temp = ''
 
-for word in string.split():
+text = text[4*count+1:]
+
+for i in range(len(text)-1):
+    word=text[i]
     if word=="||":
+        #temp=''
         ct=1
+        line+=1
     elif word=="|":
         ct+=1
-    elif word not in col.values() and 1<=ct<=count:
-        if "--" not in word:
-            if col[ct] not in table.keys():
-                table[col[ct]]=[]
-            table[col[ct]].append(word)
+    elif 1<=ct<=count:
+        if col[ct] not in table.keys():
+            table[col[ct]]=[]
+        if "|" not in text[i+1]:
+            temp+=word
+        if "|" in text[i+1]:
+            temp+=' '+word
+            table[col[ct]].append(temp)
+            temp=''
         
 query = pd.DataFrame(table)
 
+print("The table has:", count, "columns")
+print("-------------:", line, "rows")
 print(query)
