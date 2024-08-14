@@ -1,0 +1,20 @@
+import pandas as pd
+
+URL = 'https://en.wikipedia.org/wiki/All-time_Olympic_Games_medal_table'
+tables = pd.read_html(URL)
+df = tables[1]
+df.columns
+df = df[['Team','Combined total']]
+df.columns = df.columns.droplevel(0)
+df = df.drop(columns=['No.'])
+df = df.rename(columns={
+                        'Unnamed: 12_level_1':'Gold',
+                        'Unnamed: 13_level_1':'Silver',
+                        'Unnamed: 14_level_1':'Bronzer',
+                        'Unnamed: 15_level_1': 'Total'})
+df = df.sort_values('Total',ascending = False)
+df = df.drop([162])
+df['Gold proportion']=df['Gold']/df['Total']*100
+df.head(10)
+
+### to be continued 08-13-2024
